@@ -1,7 +1,10 @@
 import { Button } from "./ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Animated Background */}
@@ -39,6 +42,7 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
             <Button
               size="lg"
+              onClick={() => navigate("/dashboard")}
               className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-all duration-300 glow group text-base sm:text-lg px-6 sm:px-8 h-12 sm:h-14"
             >
               Start Recording Free
@@ -47,6 +51,7 @@ const Hero = () => {
             <Button
               size="lg"
               variant="outline"
+              onClick={() => navigate("/services")}
               className="border-primary/50 hover:bg-primary/10 text-base sm:text-lg px-6 sm:px-8 h-12 sm:h-14"
             >
               Explore Features

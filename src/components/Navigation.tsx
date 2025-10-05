@@ -57,7 +57,10 @@ const Navigation = () => {
                 {link.name}
               </Link>
             ))}
-            <Button className="ml-4 bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity glow">
+            <Button 
+              onClick={() => window.location.href = "/dashboard"}
+              className="ml-4 bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity glow"
+            >
               Get Started
             </Button>
           </div>
@@ -93,7 +96,13 @@ const Navigation = () => {
               </Link>
             ))}
             <div className="px-4 pt-2">
-              <Button className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity">
+              <Button 
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  window.location.href = "/dashboard";
+                }}
+                className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity"
+              >
                 Get Started
               </Button>
             </div>
