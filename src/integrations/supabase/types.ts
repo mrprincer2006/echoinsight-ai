@@ -14,7 +14,257 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      conversations: {
+        Row: {
+          audio_url: string | null
+          created_at: string | null
+          duration_seconds: number | null
+          expires_at: string | null
+          id: string
+          participant_count: number | null
+          recorded_at: string | null
+          status: string | null
+          title: string
+          type: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          audio_url?: string | null
+          created_at?: string | null
+          duration_seconds?: number | null
+          expires_at?: string | null
+          id?: string
+          participant_count?: number | null
+          recorded_at?: string | null
+          status?: string | null
+          title: string
+          type?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          audio_url?: string | null
+          created_at?: string | null
+          duration_seconds?: number | null
+          expires_at?: string | null
+          id?: string
+          participant_count?: number | null
+          recorded_at?: string | null
+          status?: string | null
+          title?: string
+          type?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conversations_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      flashcards: {
+        Row: {
+          answer: string
+          conversation_id: string
+          created_at: string | null
+          difficulty: string | null
+          id: string
+          last_reviewed_at: string | null
+          next_review_at: string | null
+          question: string
+          review_count: number | null
+          tags: string[] | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          answer: string
+          conversation_id: string
+          created_at?: string | null
+          difficulty?: string | null
+          id?: string
+          last_reviewed_at?: string | null
+          next_review_at?: string | null
+          question: string
+          review_count?: number | null
+          tags?: string[] | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          answer?: string
+          conversation_id?: string
+          created_at?: string | null
+          difficulty?: string | null
+          id?: string
+          last_reviewed_at?: string | null
+          next_review_at?: string | null
+          question?: string
+          review_count?: number | null
+          tags?: string[] | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "flashcards_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "flashcards_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      personality_insights: {
+        Row: {
+          conversation_id: string
+          created_at: string | null
+          id: string
+          insights: string[]
+          person_name: string
+          tags: string[] | null
+        }
+        Insert: {
+          conversation_id: string
+          created_at?: string | null
+          id?: string
+          insights: string[]
+          person_name: string
+          tags?: string[] | null
+        }
+        Update: {
+          conversation_id?: string
+          created_at?: string | null
+          id?: string
+          insights?: string[]
+          person_name?: string
+          tags?: string[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "personality_insights_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          full_name: string | null
+          id: string
+          subscription_expires_at: string | null
+          subscription_tier: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id: string
+          subscription_expires_at?: string | null
+          subscription_tier?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id?: string
+          subscription_expires_at?: string | null
+          subscription_tier?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      summaries: {
+        Row: {
+          action_items: string[] | null
+          conversation_id: string
+          created_at: string | null
+          id: string
+          key_points: string[]
+          main_topics: string[] | null
+          one_line_summary: string | null
+        }
+        Insert: {
+          action_items?: string[] | null
+          conversation_id: string
+          created_at?: string | null
+          id?: string
+          key_points: string[]
+          main_topics?: string[] | null
+          one_line_summary?: string | null
+        }
+        Update: {
+          action_items?: string[] | null
+          conversation_id?: string
+          created_at?: string | null
+          id?: string
+          key_points?: string[]
+          main_topics?: string[] | null
+          one_line_summary?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "summaries_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      transcripts: {
+        Row: {
+          conversation_id: string
+          created_at: string | null
+          full_text: string
+          id: string
+          language: string | null
+          speaker_segments: Json | null
+        }
+        Insert: {
+          conversation_id: string
+          created_at?: string | null
+          full_text: string
+          id?: string
+          language?: string | null
+          speaker_segments?: Json | null
+        }
+        Update: {
+          conversation_id?: string
+          created_at?: string | null
+          full_text?: string
+          id?: string
+          language?: string | null
+          speaker_segments?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transcripts_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
