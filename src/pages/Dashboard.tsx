@@ -1,9 +1,13 @@
+import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import RecordingModal from "@/components/RecordingModal";
 import { Button } from "@/components/ui/button";
 import { Mic, FileText, Brain, Calendar } from "lucide-react";
 
 const Dashboard = () => {
+  const [isRecordingModalOpen, setIsRecordingModalOpen] = useState(false);
+
   const recentConversations = [
     {
       title: "Team Meeting - Q4 Planning",
@@ -43,7 +47,10 @@ const Dashboard = () => {
 
           {/* Quick Actions */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 animate-fade-in-up">
-            <Button className="h-auto flex-col gap-3 py-6 bg-gradient-to-br from-primary to-secondary hover:opacity-90">
+            <Button 
+              onClick={() => setIsRecordingModalOpen(true)}
+              className="h-auto flex-col gap-3 py-6 bg-gradient-to-br from-primary to-secondary hover:opacity-90"
+            >
               <Mic className="w-8 h-8" />
               <span className="font-semibold">New Recording</span>
             </Button>
@@ -93,6 +100,11 @@ const Dashboard = () => {
           </div>
         </div>
       </main>
+
+      <RecordingModal 
+        open={isRecordingModalOpen} 
+        onOpenChange={setIsRecordingModalOpen} 
+      />
 
       <Footer />
     </div>
