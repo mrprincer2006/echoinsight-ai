@@ -42,7 +42,7 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
             <Button
               size="lg"
-              onClick={() => navigate("/dashboard")}
+              onClick={() => navigate("/auth")}
               className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-all duration-300 glow group text-base sm:text-lg px-6 sm:px-8 h-12 sm:h-14"
             >
               Start Recording Free

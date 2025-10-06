@@ -1,12 +1,52 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import RecordingModal from "@/components/RecordingModal";
 import { Button } from "@/components/ui/button";
-import { Mic, FileText, Brain, Calendar } from "lucide-react";
+import { Mic, FileText, Brain, Calendar, LogOut } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
   const [isRecordingModalOpen, setIsRecordingModalOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    // Check authentication
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!session) {
+        navigate("/auth");
+      } else {
+        setUser(session.user);
+      }
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (!session) {
+        navigate("/auth");
+      } else {
+        setUser(session.user);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate]);
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    toast({
+      title: "Signed out",
+      description: "You've been successfully signed out.",
+    });
+    navigate("/");
+  };
+
+  if (!user) {
+    return null; // or a loading spinner
+  }
 
   const recentConversations = [
     {
@@ -36,13 +76,25 @@ const Dashboard = () => {
       <main className="pt-24 sm:pt-32 pb-16">
         <div className="container mx-auto px-4 lg:px-8">
           {/* Header */}
-          <div className="mb-12 animate-fade-in">
-            <h1 className="text-4xl sm:text-5xl font-bold font-heading mb-4">
-              Your <span className="text-gradient">Digital Vault</span>
-            </h1>
-            <p className="text-lg text-foreground/70">
-              Manage and explore your conversation insights
-            </p>
+          <div className="mb-12 animate-fade-in flex justify-between items-start">
+            <div>
+              <h1 className="text-4xl sm:text-5xl font-bold font-heading mb-4">
+                Your <span className="text-gradient">Digital Vault</span>
+              </h1>
+              <p className="text-lg text-foreground/70">
+                Manage and explore your conversation insights
+              </p>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="text-right">
+                <p className="text-sm text-foreground/60">Signed in as</p>
+                <p className="font-medium">{user.email}</p>
+              </div>
+              <Button variant="outline" size="sm" onClick={handleSignOut}>
+                <LogOut className="w-4 h-4 mr-2" />
+                Sign Out
+              </Button>
+            </div>
           </div>
 
           {/* Quick Actions */}

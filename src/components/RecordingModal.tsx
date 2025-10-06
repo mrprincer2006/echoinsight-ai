@@ -112,38 +112,76 @@ const RecordingModal = ({ open, onOpenChange }: RecordingModalProps) => {
         throw new Error("You must be logged in to save recordings");
       }
 
-      // Convert blob to base64
-      const reader = new FileReader();
-      reader.readAsDataURL(audioBlob);
-      
-      reader.onloadend = async () => {
-        const base64Audio = reader.result as string;
-        const base64Data = base64Audio.split(',')[1];
+      // Create conversation record first
+      const { data: conversation, error: convError } = await supabase
+        .from('conversations')
+        .insert({
+          user_id: user.id,
+          title: title.trim(),
+          type: 'discussion',
+          duration_seconds: recordingTime,
+          status: 'processing',
+        })
+        .select()
+        .single();
 
-        // Create conversation record
-        const { data: conversation, error: convError } = await supabase
-          .from('conversations')
-          .insert({
-            user_id: user.id,
-            title: title.trim(),
-            type: 'discussion',
-            duration_seconds: recordingTime,
-            status: 'completed',
-          })
-          .select()
-          .single();
+      if (convError) throw convError;
 
-        if (convError) throw convError;
-
-        toast({
-          title: "Recording saved!",
-          description: "Your conversation has been saved to your vault",
+      // Upload audio to storage
+      const fileName = `${user.id}/${conversation.id}.webm`;
+      const { error: uploadError } = await supabase.storage
+        .from('recordings')
+        .upload(fileName, audioBlob, {
+          contentType: 'audio/webm',
+          upsert: false,
         });
 
-        // Reset and close
-        resetModal();
-        onOpenChange(false);
-      };
+      if (uploadError) throw uploadError;
+
+      // Update conversation with audio URL
+      const { error: updateError } = await supabase
+        .from('conversations')
+        .update({ audio_url: fileName })
+        .eq('id', conversation.id);
+
+      if (updateError) throw updateError;
+
+      toast({
+        title: "Recording saved!",
+        description: "Processing your conversation... Summaries will be ready soon.",
+      });
+
+      // Trigger transcription and insights generation in background
+      supabase.functions
+        .invoke('transcribe-audio', {
+          body: { audioUrl: fileName, conversationId: conversation.id },
+        })
+        .then(({ data, error }) => {
+          if (error) {
+            console.error('Transcription error:', error);
+            return;
+          }
+          console.log('Transcription started');
+          
+          // Chain insights generation after transcription
+          return supabase.functions.invoke('generate-insights', {
+            body: { conversationId: conversation.id },
+          });
+        })
+        .then((result) => {
+          if (result?.error) {
+            console.error('Insights error:', result.error);
+          } else {
+            console.log('Insights generation completed');
+          }
+        })
+        .catch((err) => {
+          console.error('Background processing error:', err);
+        });
+
+      // Reset and close
+      resetModal();
+      onOpenChange(false);
 
     } catch (error) {
       console.error('Error saving recording:', error);
