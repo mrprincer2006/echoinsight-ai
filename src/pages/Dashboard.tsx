@@ -90,10 +90,15 @@ const Dashboard = () => {
                 <p className="text-sm text-foreground/60">Signed in as</p>
                 <p className="font-medium">{user.email}</p>
               </div>
-              <Button variant="outline" size="sm" onClick={handleSignOut}>
-                <LogOut className="w-4 h-4 mr-2" />
-                Sign Out
-              </Button>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm" onClick={() => navigate("/profile")}>
+                  Profile
+                </Button>
+                <Button variant="outline" size="sm" onClick={handleSignOut}>
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Sign Out
+                </Button>
+              </div>
             </div>
           </div>
 
