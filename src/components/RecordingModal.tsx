@@ -106,13 +106,22 @@ const RecordingModal = ({ open, onOpenChange }: RecordingModalProps) => {
     setIsSaving(true);
 
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      console.log('Starting save recording process...');
+      const { data: { user }, error: authError } = await supabase.auth.getUser();
+      
+      console.log('Auth check result:', { user: user?.id, error: authError });
+      
+      if (authError) {
+        console.error('Auth error:', authError);
+        throw new Error(`Authentication error: ${authError.message}`);
+      }
       
       if (!user) {
         throw new Error("You must be logged in to save recordings");
       }
 
       // Create conversation record first
+      console.log('Creating conversation record...');
       const { data: conversation, error: convError } = await supabase
         .from('conversations')
         .insert({
@@ -125,26 +134,40 @@ const RecordingModal = ({ open, onOpenChange }: RecordingModalProps) => {
         .select()
         .single();
 
-      if (convError) throw convError;
+      if (convError) {
+        console.error('Conversation creation error:', convError);
+        throw convError;
+      }
+      console.log('Conversation created:', conversation.id);
 
       // Upload audio to storage
       const fileName = `${user.id}/${conversation.id}.webm`;
-      const { error: uploadError } = await supabase.storage
+      console.log('Uploading audio to storage:', fileName);
+      const { data: uploadData, error: uploadError } = await supabase.storage
         .from('recordings')
         .upload(fileName, audioBlob, {
           contentType: 'audio/webm',
           upsert: false,
         });
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        console.error('Storage upload error:', uploadError);
+        throw new Error(`Upload failed: ${uploadError.message}`);
+      }
+      console.log('Audio uploaded successfully:', uploadData);
 
       // Update conversation with audio URL
+      console.log('Updating conversation with audio URL...');
       const { error: updateError } = await supabase
         .from('conversations')
         .update({ audio_url: fileName })
         .eq('id', conversation.id);
 
-      if (updateError) throw updateError;
+      if (updateError) {
+        console.error('Conversation update error:', updateError);
+        throw updateError;
+      }
+      console.log('Conversation updated successfully');
 
       toast({
         title: "Recording saved!",
