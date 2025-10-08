@@ -4,15 +4,26 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import RecordingModal from "@/components/RecordingModal";
 import { Button } from "@/components/ui/button";
-import { Mic, FileText, Brain, Calendar, LogOut } from "lucide-react";
+import { Mic, FileText, Brain, Calendar, LogOut, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+
+interface Conversation {
+  id: string;
+  title: string;
+  created_at: string;
+  duration_seconds: number | null;
+  participant_count: number;
+  status: string;
+}
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isRecordingModalOpen, setIsRecordingModalOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Check authentication
@@ -21,6 +32,7 @@ const Dashboard = () => {
         navigate("/auth");
       } else {
         setUser(session.user);
+        fetchConversations(session.user.id);
       }
     });
 
@@ -29,11 +41,75 @@ const Dashboard = () => {
         navigate("/auth");
       } else {
         setUser(session.user);
+        fetchConversations(session.user.id);
       }
     });
 
     return () => subscription.unsubscribe();
   }, [navigate]);
+
+  // Real-time subscription for new conversations
+  useEffect(() => {
+    if (!user?.id) return;
+
+    const channel = supabase
+      .channel('conversations-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'conversations',
+          filter: `user_id=eq.${user.id}`
+        },
+        (payload) => {
+          setConversations(prev => [payload.new as Conversation, ...prev]);
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'conversations',
+          filter: `user_id=eq.${user.id}`
+        },
+        (payload) => {
+          setConversations(prev => 
+            prev.map(conv => conv.id === payload.new.id ? payload.new as Conversation : conv)
+          );
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user?.id]);
+
+  const fetchConversations = async (userId: string) => {
+    try {
+      setIsLoading(true);
+      const { data, error } = await supabase
+        .from('conversations')
+        .select('*')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false })
+        .limit(10);
+
+      if (error) throw error;
+      setConversations(data || []);
+    } catch (error) {
+      console.error('Error fetching conversations:', error);
+      toast({
+        title: "Error loading conversations",
+        description: "Please refresh the page",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
@@ -45,29 +121,27 @@ const Dashboard = () => {
   };
 
   if (!user) {
-    return null; // or a loading spinner
+    return null;
   }
 
-  const recentConversations = [
-    {
-      title: "Team Meeting - Q4 Planning",
-      date: "2 hours ago",
-      duration: "45 min",
-      participants: 5,
-    },
-    {
-      title: "Client Call - Product Demo",
-      date: "Yesterday",
-      duration: "30 min",
-      participants: 3,
-    },
-    {
-      title: "AI Lecture - Neural Networks",
-      date: "2 days ago",
-      duration: "60 min",
-      participants: 1,
-    },
-  ];
+  const formatTimeAgo = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+    
+    if (seconds < 60) return 'Just now';
+    if (seconds < 3600) return `${Math.floor(seconds / 60)} min ago`;
+    if (seconds < 86400) return `${Math.floor(seconds / 3600)} hours ago`;
+    if (seconds < 604800) return `${Math.floor(seconds / 86400)} days ago`;
+    return date.toLocaleDateString();
+  };
+
+  const formatDuration = (seconds: number | null) => {
+    if (!seconds) return '0 min';
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins} min${secs > 0 ? ` ${secs}s` : ''}`;
+  };
 
   return (
     <div className="min-h-screen">
@@ -128,32 +202,55 @@ const Dashboard = () => {
           {/* Recent Conversations */}
           <div className="glass rounded-2xl p-8 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
             <h2 className="text-2xl font-bold font-heading mb-6">Recent Conversations</h2>
-            <div className="space-y-4">
-              {recentConversations.map((conv, index) => (
-                <div
-                  key={index}
-                  className="bg-card/50 rounded-xl p-6 hover:bg-card/80 transition-all cursor-pointer group"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1">
-                      <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">
-                        {conv.title}
-                      </h3>
-                      <div className="flex flex-wrap gap-4 text-sm text-foreground/60">
-                        <span>{conv.date}</span>
-                        <span>•</span>
-                        <span>{conv.duration}</span>
-                        <span>•</span>
-                        <span>{conv.participants} participants</span>
+            {isLoading ? (
+              <div className="flex items-center justify-center py-12">
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+              </div>
+            ) : conversations.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-foreground/60 mb-4">No recordings yet</p>
+                <Button onClick={() => setIsRecordingModalOpen(true)} variant="outline">
+                  <Mic className="w-4 h-4 mr-2" />
+                  Create your first recording
+                </Button>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {conversations.map((conv) => (
+                  <div
+                    key={conv.id}
+                    className="bg-card/50 rounded-xl p-6 hover:bg-card/80 transition-all cursor-pointer group"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <h3 className="font-bold text-lg group-hover:text-primary transition-colors">
+                            {conv.title}
+                          </h3>
+                          <span className={`text-xs px-2 py-1 rounded-full ${
+                            conv.status === 'completed' ? 'bg-green-500/20 text-green-400' :
+                            conv.status === 'processing' ? 'bg-yellow-500/20 text-yellow-400' :
+                            'bg-blue-500/20 text-blue-400'
+                          }`}>
+                            {conv.status}
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap gap-4 text-sm text-foreground/60">
+                          <span>{formatTimeAgo(conv.created_at)}</span>
+                          <span>•</span>
+                          <span>{formatDuration(conv.duration_seconds)}</span>
+                          <span>•</span>
+                          <span>{conv.participant_count} participant{conv.participant_count !== 1 ? 's' : ''}</span>
+                        </div>
                       </div>
+                      <Button variant="ghost" size="sm" className="opacity-0 group-hover:opacity-100 transition-opacity">
+                        View →
+                      </Button>
                     </div>
-                    <Button variant="ghost" size="sm" className="opacity-0 group-hover:opacity-100 transition-opacity">
-                      View →
-                    </Button>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </main>
