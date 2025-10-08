@@ -72,8 +72,11 @@ const Privacy = () => {
               <section className="space-y-4">
                 <h2 className="text-2xl font-bold font-heading text-primary">Contact Us</h2>
                 <p className="text-foreground/80 leading-relaxed">
-                  If you have any questions about this Privacy Policy, please contact us at privacy@srsvault.ai
-                  or through our contact page.
+                  If you have any questions about this Privacy Policy, please contact us at{" "}
+                  <a href="mailto:rajwtf213@gmail.com" className="text-primary hover:underline">
+                    rajwtf213@gmail.com
+                  </a>
+                  {" "}or through our contact page.
                 </p>
               </section>
             </div>

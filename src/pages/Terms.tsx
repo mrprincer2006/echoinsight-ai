@@ -66,6 +66,16 @@ const Terms = () => {
                   any damages arising from the use or inability to use our service.
                 </p>
               </section>
+
+              <section className="space-y-4">
+                <h2 className="text-2xl font-bold font-heading text-primary">7. Contact</h2>
+                <p className="text-foreground/80 leading-relaxed">
+                  For questions about these Terms & Conditions, please contact us at{" "}
+                  <a href="mailto:rajwtf213@gmail.com" className="text-primary hover:underline">
+                    rajwtf213@gmail.com
+                  </a>
+                </p>
+              </section>
             </div>
           </div>
         </div>
