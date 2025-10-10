@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 
@@ -7,6 +7,7 @@ const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -58,7 +59,7 @@ const Navigation = () => {
               </Link>
             ))}
             <Button 
-              onClick={() => window.location.href = "/auth"}
+              onClick={() => navigate("/auth")}
               className="ml-4 bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity glow"
             >
               Get Started
@@ -99,7 +100,7 @@ const Navigation = () => {
               <Button 
                 onClick={() => {
                   setIsMobileMenuOpen(false);
-                  window.location.href = "/auth";
+                  navigate("/auth");
                 }}
                 className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity"
               >
