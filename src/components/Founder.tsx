@@ -22,8 +22,8 @@ const Founder = () => {
           {/* Founder Content */}
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Image */}
-            <div className="order-2 md:order-1 animate-fade-in-up">
-              <div className="relative group">
+            <div className="order-1 md:order-1 animate-fade-in-up">
+              <div className="relative group max-w-md mx-auto md:max-w-none">
                 <div className="absolute -inset-4 bg-gradient-to-r from-primary to-secondary rounded-2xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity" />
                 <div className="relative glass rounded-2xl p-2 overflow-hidden">
                   <img
@@ -36,7 +36,7 @@ const Founder = () => {
             </div>
 
             {/* Bio */}
-            <div className="order-1 md:order-2 space-y-6 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+            <div className="order-2 md:order-2 space-y-6 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
               <div>
                 <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-heading mb-2">
                   Prince Raj
