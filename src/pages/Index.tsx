@@ -7,9 +7,11 @@ import GradientBlinds from "@/components/GradientBlinds";
 
 const Index = () => {
   return (
-    <div className="relative min-h-screen overflow-hidden">
-      {/* 🔮 Gradient Background */}
-      <div className="absolute inset-0 -z-10">
+    <div className="min-h-screen">
+      <Navigation />
+
+      {/* 🌀 Gradient only behind Hero */}
+      <div className="relative" style={{ height: "600px" }}>
         <GradientBlinds
           gradientColors={["#FF9FFC", "#5227FF"]}
           angle={0}
@@ -24,11 +26,11 @@ const Index = () => {
           shineDirection="left"
           mixBlendMode="lighten"
         />
+        <div className="absolute inset-0 z-10">
+          <Hero />
+        </div>
       </div>
 
-      {/* 🌐 Page Content */}
-      <Navigation />
-      <Hero />
       <Features />
       <Founder />
       <Footer />
