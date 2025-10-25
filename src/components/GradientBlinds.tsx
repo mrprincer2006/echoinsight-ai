@@ -3,14 +3,14 @@ import { Renderer, Program, Mesh, Triangle } from 'ogl';
 import './GradientBlinds.css';
 
 const MAX_COLORS = 8;
-const hexToRGB = (hex: string): number[] => {
+const hexToRGB = hex => {
   const c = hex.replace('#', '').padEnd(6, '0');
   const r = parseInt(c.slice(0, 2), 16) / 255;
   const g = parseInt(c.slice(2, 4), 16) / 255;
   const b = parseInt(c.slice(4, 6), 16) / 255;
   return [r, g, b];
 };
-const prepStops = (stops?: string[]): { arr: number[][], count: number } => {
+const prepStops = stops => {
   const base = (stops && stops.length ? stops : ['#FF9FFC', '#5227FF']).slice(0, MAX_COLORS);
   if (base.length === 1) base.push(base[0]);
   while (base.length < MAX_COLORS) base.push(base[base.length - 1]);
@@ -19,25 +19,6 @@ const prepStops = (stops?: string[]): { arr: number[][], count: number } => {
   const count = Math.max(2, Math.min(MAX_COLORS, stops?.length ?? 2));
   return { arr, count };
 };
-
-interface GradientBlindsProps {
-  className?: string;
-  dpr?: number;
-  paused?: boolean;
-  gradientColors?: string[];
-  angle?: number;
-  noise?: number;
-  blindCount?: number;
-  blindMinWidth?: number;
-  mouseDampening?: number;
-  mirrorGradient?: boolean;
-  spotlightRadius?: number;
-  spotlightSoftness?: number;
-  spotlightOpacity?: number;
-  distortAmount?: number;
-  shineDirection?: 'left' | 'right';
-  mixBlendMode?: React.CSSProperties['mixBlendMode'];
-}
 
 const GradientBlinds = ({
   className,
@@ -56,7 +37,7 @@ const GradientBlinds = ({
   distortAmount = 0,
   shineDirection = 'left',
   mixBlendMode = 'lighten'
-}: GradientBlindsProps) => {
+}) => {
   const containerRef = useRef(null);
   const rafRef = useRef(null);
   const programRef = useRef(null);
@@ -274,7 +255,7 @@ void main() {
     const ro = new ResizeObserver(resize);
     ro.observe(container);
 
-    const onPointerMove = (e: PointerEvent) => {
+    const onPointerMove = e => {
       const rect = canvas.getBoundingClientRect();
       const scale = renderer.dpr || 1;
       const x = (e.clientX - rect.left) * scale;
@@ -286,7 +267,7 @@ void main() {
     };
     canvas.addEventListener('pointermove', onPointerMove);
 
-    const loop = (t: number) => {
+    const loop = t => {
       rafRef.current = requestAnimationFrame(loop);
       uniforms.iTime.value = t * 0.001;
       if (mouseDampening > 0) {
@@ -306,7 +287,7 @@ void main() {
       if (!paused && programRef.current && meshRef.current) {
         try {
           renderer.render({ scene: meshRef.current });
-        } catch (e: any) {
+        } catch (e) {
           console.error(e);
         }
       }
@@ -320,7 +301,7 @@ void main() {
       if (canvas.parentElement === container) {
         container.removeChild(canvas);
       }
-      const callIfFn = (obj: any, key: string) => {
+      const callIfFn = (obj, key) => {
         if (obj && typeof obj[key] === 'function') {
           obj[key].call(obj);
         }
@@ -354,7 +335,7 @@ void main() {
   return (
     <div
       ref={containerRef}
-      className={`gradient-blinds-container ${className || ''}`}
+      className={`gradient-blinds-container ${className}`}
       style={{
         ...(mixBlendMode && {
           mixBlendMode: mixBlendMode
