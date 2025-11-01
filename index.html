@@ -22,6 +22,46 @@
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5004901251736763"
      crossorigin="anonymous"></script>
+    
+    <style>
+      /* Chatbot positioning fix - prevent overlap with content */
+      #noupe-embed-container,
+      .noupe-widget,
+      .noupe-chat-widget,
+      [class*="noupe"] {
+        position: fixed !important;
+        bottom: 24px !important;
+        right: 24px !important;
+        z-index: 50 !important;
+        max-width: 400px !important;
+      }
+      
+      /* Mobile responsive positioning */
+      @media (max-width: 768px) {
+        #noupe-embed-container,
+        .noupe-widget,
+        .noupe-chat-widget,
+        [class*="noupe"] {
+          bottom: 80px !important;
+          right: 16px !important;
+          max-width: calc(100vw - 32px) !important;
+        }
+      }
+      
+      /* Ensure chatbot button stays visible but unobtrusive */
+      #noupe-embed-container button,
+      .noupe-widget button,
+      .noupe-chat-widget button {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+        transition: transform 0.2s ease !important;
+      }
+      
+      #noupe-embed-container button:hover,
+      .noupe-widget button:hover,
+      .noupe-chat-widget button:hover {
+        transform: scale(1.05) !important;
+      }
+    </style>
   </head>
 
   <body>
