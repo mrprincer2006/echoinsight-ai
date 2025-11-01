@@ -26,24 +26,28 @@
     <style>
       /* Chatbot positioning fix - prevent overlap with content */
       #noupe-embed-container,
+      [id^="noupe-embed"],
       .noupe-widget,
       .noupe-chat-widget,
-      [class*="noupe"] {
+      [class^="noupe-"],
+      [class*=" noupe-"] {
         position: fixed !important;
-        bottom: calc(var(--chatbot-gap-bottom-desktop) + env(safe-area-inset-bottom, 0px)) !important;
-        right: var(--chatbot-gap-right-desktop) !important;
-        z-index: 50 !important;
+        bottom: 40px !important;
+        right: 24px !important;
+        z-index: 40 !important; /* keep it under critical modals/nav */
         max-width: 400px !important;
       }
       
       /* Mobile responsive positioning */
       @media (max-width: 768px) {
         #noupe-embed-container,
+        [id^="noupe-embed"],
         .noupe-widget,
         .noupe-chat-widget,
-        [class*="noupe"] {
-          bottom: calc(var(--chatbot-gap-bottom-mobile) + env(safe-area-inset-bottom, 0px)) !important;
-          right: var(--chatbot-gap-right-mobile) !important;
+        [class^="noupe-"],
+        [class*=" noupe-"] {
+          bottom: 120px !important;
+          right: 16px !important;
           max-width: calc(100vw - 32px) !important;
         }
       }
