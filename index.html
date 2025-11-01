@@ -30,8 +30,8 @@
       .noupe-chat-widget,
       [class*="noupe"] {
         position: fixed !important;
-        bottom: 24px !important;
-        right: 24px !important;
+        bottom: calc(var(--chatbot-gap-bottom-desktop) + env(safe-area-inset-bottom, 0px)) !important;
+        right: var(--chatbot-gap-right-desktop) !important;
         z-index: 50 !important;
         max-width: 400px !important;
       }
@@ -42,8 +42,8 @@
         .noupe-widget,
         .noupe-chat-widget,
         [class*="noupe"] {
-          bottom: 80px !important;
-          right: 16px !important;
+          bottom: calc(var(--chatbot-gap-bottom-mobile) + env(safe-area-inset-bottom, 0px)) !important;
+          right: var(--chatbot-gap-right-mobile) !important;
           max-width: calc(100vw - 32px) !important;
         }
       }

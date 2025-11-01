@@ -73,6 +73,13 @@ All colors MUST be HSL.
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Chatbot safe area variables */
+    --chatbot-bubble-size: 64px;
+    --chatbot-gap-right-desktop: 24px;
+    --chatbot-gap-right-mobile: 16px;
+    --chatbot-gap-bottom-desktop: 24px;
+    --chatbot-gap-bottom-mobile: 80px;
   }
 
   .dark {
@@ -125,6 +132,13 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground font-['Space_Grotesk'];
+    padding-bottom: calc(var(--chatbot-bubble-size) + var(--chatbot-gap-bottom-desktop) + env(safe-area-inset-bottom, 0px));
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding-bottom: calc(var(--chatbot-bubble-size) + var(--chatbot-gap-bottom-mobile) + env(safe-area-inset-bottom, 0px));
+    }
   }
   
   h1, h2, h3, h4, h5, h6 {
