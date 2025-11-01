@@ -106,5 +106,25 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script src='https://www.noupe.com/embed/0199d82ac1df7e399f0e4cd5bef08634ba75.js'></script>
+    <script>
+  // 🧠 Smart Chatbot Position Adjuster
+  window.addEventListener("load", () => {
+    const adjustChatbot = () => {
+      const chatbot = document.querySelector("#noupe-embed-container, .noupe-widget, .noupe-chat-widget");
+      if (!chatbot) return;
+
+      // Detect footer height if present
+      const footer = document.querySelector("footer, .app-footer");
+      const footerHeight = footer ? footer.offsetHeight : 0;
+
+      // Add safe bottom spacing dynamically
+      const baseBottom = window.innerWidth <= 768 ? 96 : 32;
+      chatbot.style.bottom = `${baseBottom + footerHeight + 16}px`;
+    };
+
+    adjustChatbot();
+    window.addEventListener("resize", adjustChatbot);
+  });
+</script>
   </body>
 </html>
