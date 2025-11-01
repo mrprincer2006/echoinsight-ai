@@ -11,6 +11,7 @@ const Hero = () => {
       {/* Gradient Blinds Background */}
       <div className="absolute inset-0 -z-10" style={{ height: '600px' }}>
         <GradientBlinds
+          className=""
           gradientColors={['#FF9FFC', '#5227FF']}
           angle={0}
           noise={0.3}

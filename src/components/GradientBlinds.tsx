@@ -2,6 +2,25 @@ import { useEffect, useRef } from 'react';
 import { Renderer, Program, Mesh, Triangle } from 'ogl';
 import './GradientBlinds.css';
 
+interface GradientBlindsProps {
+  className?: string;
+  dpr?: number;
+  paused?: boolean;
+  gradientColors?: string[];
+  angle?: number;
+  noise?: number;
+  blindCount?: number;
+  blindMinWidth?: number;
+  mouseDampening?: number;
+  mirrorGradient?: boolean;
+  spotlightRadius?: number;
+  spotlightSoftness?: number;
+  spotlightOpacity?: number;
+  distortAmount?: number;
+  shineDirection?: 'left' | 'right';
+  mixBlendMode?: React.CSSProperties['mixBlendMode'];
+}
+
 const MAX_COLORS = 8;
 const hexToRGB = hex => {
   const c = hex.replace('#', '').padEnd(6, '0');
@@ -21,7 +40,7 @@ const prepStops = stops => {
 };
 
 const GradientBlinds = ({
-  className,
+  className = '',
   dpr,
   paused = false,
   gradientColors,
@@ -37,7 +56,7 @@ const GradientBlinds = ({
   distortAmount = 0,
   shineDirection = 'left',
   mixBlendMode = 'lighten'
-}) => {
+}: GradientBlindsProps) => {
   const containerRef = useRef(null);
   const rafRef = useRef(null);
   const programRef = useRef(null);
@@ -338,7 +357,7 @@ void main() {
       className={`gradient-blinds-container ${className}`}
       style={{
         ...(mixBlendMode && {
-          mixBlendMode: mixBlendMode
+          mixBlendMode: mixBlendMode as React.CSSProperties['mixBlendMode']
         })
       }}
     />
