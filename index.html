@@ -23,49 +23,83 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5004901251736763"
      crossorigin="anonymous"></script>
     
-    <style>
-      /* Chatbot positioning fix - prevent overlap with content */
-      #noupe-embed-container,
-      [id^="noupe-embed"],
-      .noupe-widget,
-      .noupe-chat-widget,
-      [class^="noupe-"],
-      [class*=" noupe-"] {
-        position: fixed !important;
-        bottom: 40px !important;
-        right: 24px !important;
-        z-index: 40 !important; /* keep it under critical modals/nav */
-        max-width: 400px !important;
-      }
-      
-      /* Mobile responsive positioning */
-      @media (max-width: 768px) {
-        #noupe-embed-container,
-        [id^="noupe-embed"],
-        .noupe-widget,
-        .noupe-chat-widget,
-        [class^="noupe-"],
-        [class*=" noupe-"] {
-          bottom: 120px !important;
-          right: 16px !important;
-          max-width: calc(100vw - 32px) !important;
-        }
-      }
-      
-      /* Ensure chatbot button stays visible but unobtrusive */
-      #noupe-embed-container button,
-      .noupe-widget button,
-      .noupe-chat-widget button {
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-        transition: transform 0.2s ease !important;
-      }
-      
-      #noupe-embed-container button:hover,
-      .noupe-widget button:hover,
-      .noupe-chat-widget button:hover {
-        transform: scale(1.05) !important;
-      }
-    </style>
+   <style>
+  /* 🧠 SRS Vault AI — Chatbot Fix & Enhancement */
+
+  /* Base chatbot container */
+  #noupe-embed-container,
+  [id^="noupe-embed"],
+  .noupe-widget,
+  .noupe-chat-widget,
+  [class^="noupe-"],
+  [class*=" noupe-"] {
+    position: fixed !important;
+    bottom: 32px !important;
+    right: 32px !important;
+    z-index: 60 !important;
+    max-width: 380px !important;
+    transition: all 0.3s ease !important;
+  }
+
+  /* Prevent overlap with site footer or floating nav */
+  body::after {
+    content: "";
+    display: block;
+    height: 120px; /* extra space for chatbot bottom */
+  }
+
+  /* Chat icon visual enhancement */
+  #noupe-embed-container button,
+  .noupe-widget button,
+  .noupe-chat-widget button {
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, hsl(263 70% 50%), hsl(338 76% 59%)) !important;
+    box-shadow: 0 8px 24px hsl(263 70% 50% / 0.4) !important;
+    transform: scale(1) !important;
+    transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+  }
+
+  #noupe-embed-container button:hover,
+  .noupe-widget button:hover,
+  .noupe-chat-widget button:hover {
+    transform: scale(1.1) !important;
+    box-shadow: 0 10px 32px hsl(338 76% 59% / 0.4) !important;
+  }
+
+  /* Chat window glassmorphism style */
+  #noupe-embed-container iframe,
+  .noupe-widget iframe,
+  .noupe-chat-widget iframe {
+    border-radius: 1rem !important;
+    backdrop-filter: blur(16px) !important;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4) !important;
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    #noupe-embed-container,
+    [id^="noupe-embed"],
+    .noupe-widget,
+    .noupe-chat-widget,
+    [class^="noupe-"],
+    [class*=" noupe-"] {
+      bottom: 96px !important;
+      right: 16px !important;
+      max-width: calc(100vw - 40px) !important;
+      z-index: 50 !important;
+    }
+
+    body::after {
+      height: 160px;
+    }
+  }
+
+  /* Prevent chatbot overlap with fixed UI components like toasts or navbars */
+  .fixed-ui,
+  .app-footer {
+    z-index: 70 !important;
+  }
+</style>
   </head>
 
   <body>
