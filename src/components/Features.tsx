@@ -1,78 +1,92 @@
+import { useNavigate } from "react-router-dom";
 import { Mic, Brain, Lock, Search, FileText, Zap, Users, Globe, BarChart3, Tag, Share2, Bell } from "lucide-react";
 
 const Features = () => {
+  const navigate = useNavigate();
   const features = [
     {
       icon: Mic,
       title: "Smart Recording",
       description: "Browser-based audio recording with real-time waveform visualization and speaker detection",
       color: "from-primary to-primary-glow",
+      path: "/smart-recording",
     },
     {
       icon: Brain,
       title: "AI Summarization",
       description: "Get 5 key points, action items, and personality insights from every conversation",
       color: "from-accent to-primary",
+      path: "/ai-summarization",
     },
     {
       icon: Lock,
       title: "Secure Vault",
       description: "AES-256 encrypted storage with 30-day free retention and premium unlimited storage",
       color: "from-secondary to-orange",
+      path: "/secure-vault",
     },
     {
       icon: Search,
       title: "Semantic Search",
       description: "Find conversations by topic, person, or context using advanced AI-powered search",
       color: "from-orange to-accent",
+      path: "/semantic-search",
     },
     {
       icon: FileText,
       title: "Study Tools",
       description: "Auto-generate flashcards and revision notes from classroom lectures",
       color: "from-primary to-secondary",
+      path: "/study-tools",
     },
     {
       icon: Zap,
       title: "Real-time Insights",
       description: "Live transcription and instant personality analysis during conversations",
       color: "from-accent to-secondary",
+      path: "/realtime-insights",
     },
     {
       icon: Tag,
       title: "Smart Tagging",
       description: "AI automatically categorizes and tags conversations by topic, sentiment, and priority",
       color: "from-primary-glow to-accent",
+      path: "/dashboard",
     },
     {
       icon: Globe,
       title: "Multi-Language",
       description: "Support for 50+ languages with automatic translation and cross-language search",
       color: "from-secondary to-primary",
+      path: "/dashboard",
     },
     {
       icon: Users,
       title: "Team Collaboration",
       description: "Share insights, collaborate on notes, and manage team conversations seamlessly",
       color: "from-accent to-orange",
+      path: "/dashboard",
     },
     {
       icon: BarChart3,
       title: "Analytics Dashboard",
       description: "Track conversation trends, speaking patterns, and engagement metrics over time",
       color: "from-orange to-primary-glow",
+      path: "/dashboard",
     },
     {
       icon: Share2,
       title: "Smart Export",
       description: "Export to PDF, Word, Notion, or share secure links with customizable permissions",
       color: "from-primary to-accent",
+      path: "/dashboard",
     },
     {
       icon: Bell,
       title: "AI Reminders",
       description: "Get intelligent follow-up alerts for action items and important conversation points",
       color: "from-secondary to-primary-glow",
+      path: "/dashboard",
     },
   ];
 
@@ -94,6 +108,7 @@ const Features = () => {
           {features.map((feature, index) => (
             <div
               key={index}
+              onClick={() => navigate(feature.path)}
               className="glass-morphism rounded-3xl p-6 sm:p-8 hover-lift cursor-pointer group animate-fade-in-up relative overflow-hidden"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
@@ -115,6 +130,12 @@ const Features = () => {
               <p className="relative text-sm sm:text-base text-foreground/70 leading-relaxed group-hover:text-foreground/90 transition-colors duration-300">
                 {feature.description}
               </p>
+              
+              {/* Click indicator */}
+              <div className="relative mt-4 text-sm text-primary/70 group-hover:text-primary transition-colors duration-300 flex items-center gap-1">
+                <span>Learn more</span>
+                <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
+              </div>
             </div>
           ))}
         </div>

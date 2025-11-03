@@ -13,6 +13,12 @@ import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
+import SmartRecording from "./pages/SmartRecording";
+import AISummarization from "./pages/AISummarization";
+import SecureVault from "./pages/SecureVault";
+import SemanticSearch from "./pages/SemanticSearch";
+import StudyTools from "./pages/StudyTools";
+import RealtimeInsights from "./pages/RealtimeInsights";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +38,12 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/smart-recording" element={<SmartRecording />} />
+          <Route path="/ai-summarization" element={<AISummarization />} />
+          <Route path="/secure-vault" element={<SecureVault />} />
+          <Route path="/semantic-search" element={<SemanticSearch />} />
+          <Route path="/study-tools" element={<StudyTools />} />
+          <Route path="/realtime-insights" element={<RealtimeInsights />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
