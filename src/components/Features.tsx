@@ -1,4 +1,4 @@
-import { Mic, Brain, Lock, Search, FileText, Zap } from "lucide-react";
+import { Mic, Brain, Lock, Search, FileText, Zap, Users, Globe, BarChart3, Tag, Share2, Bell } from "lucide-react";
 
 const Features = () => {
   const features = [
@@ -37,6 +37,42 @@ const Features = () => {
       title: "Real-time Insights",
       description: "Live transcription and instant personality analysis during conversations",
       color: "from-accent to-secondary",
+    },
+    {
+      icon: Tag,
+      title: "Smart Tagging",
+      description: "AI automatically categorizes and tags conversations by topic, sentiment, and priority",
+      color: "from-primary-glow to-accent",
+    },
+    {
+      icon: Globe,
+      title: "Multi-Language",
+      description: "Support for 50+ languages with automatic translation and cross-language search",
+      color: "from-secondary to-primary",
+    },
+    {
+      icon: Users,
+      title: "Team Collaboration",
+      description: "Share insights, collaborate on notes, and manage team conversations seamlessly",
+      color: "from-accent to-orange",
+    },
+    {
+      icon: BarChart3,
+      title: "Analytics Dashboard",
+      description: "Track conversation trends, speaking patterns, and engagement metrics over time",
+      color: "from-orange to-primary-glow",
+    },
+    {
+      icon: Share2,
+      title: "Smart Export",
+      description: "Export to PDF, Word, Notion, or share secure links with customizable permissions",
+      color: "from-primary to-accent",
+    },
+    {
+      icon: Bell,
+      title: "AI Reminders",
+      description: "Get intelligent follow-up alerts for action items and important conversation points",
+      color: "from-secondary to-primary-glow",
     },
   ];
 
