@@ -58,22 +58,25 @@ const Features = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="glass rounded-2xl p-6 sm:p-8 hover:scale-105 transition-all duration-300 group animate-fade-in-up"
+              className="glass-morphism rounded-3xl p-6 sm:p-8 hover-lift cursor-pointer group animate-fade-in-up relative overflow-hidden"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
+              {/* Hover gradient effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
               {/* Icon */}
               <div className="relative mb-6">
-                <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} rounded-xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity`} />
-                <div className={`relative w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br ${feature.color} rounded-xl flex items-center justify-center`}>
-                  <feature.icon className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
+                <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} rounded-2xl blur-2xl opacity-50 group-hover:opacity-100 transition-all duration-500 group-hover:scale-110`} />
+                <div className={`relative w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br ${feature.color} rounded-2xl flex items-center justify-center group-hover:rotate-6 transition-transform duration-500`}>
+                  <feature.icon className="w-7 h-7 sm:w-8 sm:h-8 text-white group-hover:scale-110 transition-transform duration-300" />
                 </div>
               </div>
 
               {/* Content */}
-              <h3 className="text-xl sm:text-2xl font-bold font-heading mb-3">
+              <h3 className="relative text-xl sm:text-2xl font-bold font-heading mb-3 group-hover:text-gradient transition-all duration-300">
                 {feature.title}
               </h3>
-              <p className="text-sm sm:text-base text-foreground/70 leading-relaxed">
+              <p className="relative text-sm sm:text-base text-foreground/70 leading-relaxed group-hover:text-foreground/90 transition-colors duration-300">
                 {feature.description}
               </p>
             </div>

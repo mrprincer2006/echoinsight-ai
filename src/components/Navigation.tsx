@@ -27,17 +27,17 @@ const Navigation = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "glass shadow-lg" : "bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        isScrolled ? "glass-morphism shadow-2xl py-2" : "bg-transparent py-4"
       }`}
     >
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+        <div className="flex items-center justify-between h-14 lg:h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-lg blur-md opacity-50 group-hover:opacity-100 transition-opacity" />
-              <h1 className="relative text-2xl lg:text-3xl font-bold font-heading text-gradient px-3 py-1">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-accent rounded-lg blur-lg opacity-50 group-hover:opacity-100 transition-all duration-500 animate-gradient-shift bg-[length:200%_200%]" />
+              <h1 className="relative text-2xl lg:text-3xl font-bold font-heading text-gradient px-4 py-2 hover:scale-105 transition-transform duration-300">
                 SRS Vault AI
               </h1>
             </div>
@@ -49,18 +49,24 @@ const Navigation = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-3 lg:px-4 py-2 rounded-lg text-sm lg:text-base font-medium transition-all duration-300 ${
+                className={`relative px-3 lg:px-4 py-2 rounded-xl text-sm lg:text-base font-medium transition-all duration-300 group ${
                   location.pathname === link.path
-                    ? "bg-primary/20 text-primary glow"
-                    : "text-foreground/80 hover:text-foreground hover:bg-white/5"
+                    ? "bg-primary/20 text-primary"
+                    : "text-foreground/80 hover:text-foreground"
                 }`}
               >
-                {link.name}
+                {location.pathname === link.path && (
+                  <span className="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-20 rounded-xl animate-pulse-glow" />
+                )}
+                <span className="relative">{link.name}</span>
+                <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all duration-300 ${
+                  location.pathname === link.path ? "w-full" : "w-0 group-hover:w-full"
+                }`} />
               </Link>
             ))}
             <Button 
               onClick={() => navigate("/auth")}
-              className="ml-4 bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity glow"
+              className="ml-4 bg-gradient-to-r from-primary via-secondary to-accent bg-[length:200%_200%] animate-gradient-shift hover:scale-105 transition-all duration-300 glow shadow-lg"
             >
               Get Started
             </Button>
