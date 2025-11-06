@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { supabase } from "@/integrations/supabase/client";
+import LiveChatWidget from "@/components/LiveChatWidget";
 import {
   Form,
   FormControl,
@@ -45,6 +47,7 @@ type ContactFormValues = z.infer<typeof contactFormSchema>;
 
 const Contact = () => {
   const { toast } = useToast();
+  const [isChatOpen, setIsChatOpen] = useState(false);
   
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
@@ -230,6 +233,7 @@ const Contact = () => {
                       <Button 
                         variant="link" 
                         className="text-secondary hover:text-secondary/80 p-0 h-auto mt-2"
+                        onClick={() => setIsChatOpen(true)}
                       >
                         Start a conversation →
                       </Button>
@@ -242,6 +246,8 @@ const Contact = () => {
         </div>
       </main>
 
+
+      <LiveChatWidget isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
       <Footer />
     </div>
   );
