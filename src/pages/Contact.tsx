@@ -8,6 +8,7 @@ import { Mail, MessageSquare, Send } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { supabase } from "@/integrations/supabase/client";
 import {
   Form,
   FormControl,
@@ -55,16 +56,34 @@ const Contact = () => {
     },
   });
 
-  const onSubmit = (data: ContactFormValues) => {
-    // Here you would typically send the data to your backend
-    console.log("Form submitted:", data);
-    
-    toast({
-      title: "Message sent!",
-      description: "We'll get back to you as soon as possible.",
-    });
-    
-    form.reset();
+  const onSubmit = async (data: ContactFormValues) => {
+    try {
+      // Save contact form submission to database
+      const { error } = await supabase
+        .from('contacts')
+        .insert({
+          name: data.name,
+          email: data.email,
+          subject: data.subject,
+          message: data.message,
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: "Message sent!",
+        description: "We'll get back to you as soon as possible.",
+      });
+      
+      form.reset();
+    } catch (error) {
+      console.error('Error submitting contact form:', error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
