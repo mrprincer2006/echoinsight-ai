@@ -34,11 +34,12 @@
   [class^="noupe-"],
   [class*=" noupe-"] {
     position: fixed !important;
-    bottom: 32px !important;
-    right: 32px !important;
+    bottom: 20px !important;
+    right: 20px !important;
     z-index: 60 !important;
-    max-width: 380px !important;
+    max-width: 280px !important;
     transition: all 0.3s ease !important;
+    transform: scale(0.85) !important;
   }
 
   /* Prevent overlap with site footer or floating nav */
@@ -54,7 +55,9 @@
   .noupe-chat-widget button {
     border-radius: 50% !important;
     background: linear-gradient(135deg, hsl(263 70% 50%), hsl(338 76% 59%)) !important;
-    box-shadow: 0 8px 24px hsl(263 70% 50% / 0.4) !important;
+    box-shadow: 0 4px 16px hsl(263 70% 50% / 0.3) !important;
+    width: 48px !important;
+    height: 48px !important;
     transform: scale(1) !important;
     transition: transform 0.25s ease, box-shadow 0.25s ease !important;
   }
@@ -62,8 +65,8 @@
   #noupe-embed-container button:hover,
   .noupe-widget button:hover,
   .noupe-chat-widget button:hover {
-    transform: scale(1.1) !important;
-    box-shadow: 0 10px 32px hsl(338 76% 59% / 0.4) !important;
+    transform: scale(1.05) !important;
+    box-shadow: 0 6px 20px hsl(338 76% 59% / 0.35) !important;
   }
 
   /* Chat window glassmorphism style */
@@ -83,10 +86,11 @@
     .noupe-chat-widget,
     [class^="noupe-"],
     [class*=" noupe-"] {
-      bottom: 96px !important;
-      right: 16px !important;
-      max-width: calc(100vw - 40px) !important;
+      bottom: 80px !important;
+      right: 12px !important;
+      max-width: calc(100vw - 32px) !important;
       z-index: 50 !important;
+      transform: scale(0.8) !important;
     }
 
     body::after {

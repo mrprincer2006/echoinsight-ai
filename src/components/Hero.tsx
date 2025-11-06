@@ -9,7 +9,7 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Gradient Blinds Background */}
-      <div className="absolute inset-0 -z-10" style={{ height: '600px' }}>
+      <div className="absolute inset-0 -z-10" style={{ height: '400px' }}>
         <GradientBlinds
           className=""
           gradientColors={['#FF9FFC', '#5227FF']}
@@ -17,9 +17,9 @@ const Hero = () => {
           noise={0.3}
           blindCount={12}
           blindMinWidth={50}
-          spotlightRadius={0.5}
+          spotlightRadius={0.4}
           spotlightSoftness={1}
-          spotlightOpacity={1}
+          spotlightOpacity={0.8}
           mouseDampening={0.15}
           distortAmount={0}
           shineDirection="left"
@@ -29,10 +29,10 @@ const Hero = () => {
       
       {/* Animated Background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.15),transparent_50%)]" />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-float" style={{ animationDelay: "2s" }} />
-        <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-accent/20 rounded-full blur-3xl animate-float" style={{ animationDelay: "4s" }} />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.1),transparent_50%)]" />
+        <div className="absolute top-1/4 left-1/4 w-48 h-48 bg-primary/15 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-secondary/15 rounded-full blur-3xl animate-float" style={{ animationDelay: "2s" }} />
+        <div className="absolute top-1/2 right-1/3 w-32 h-32 bg-accent/15 rounded-full blur-3xl animate-float" style={{ animationDelay: "4s" }} />
       </div>
 
       <div className="container mx-auto px-4 lg:px-8">
