@@ -214,6 +214,54 @@ export type Database = {
           },
         ]
       }
+      payments: {
+        Row: {
+          amount: number | null
+          created_at: string
+          id: string
+          notes: string | null
+          payment_method: string
+          receipt_url: string | null
+          status: string
+          transaction_id: string | null
+          updated_at: string
+          upi_id: string | null
+          user_email: string | null
+          user_id: string | null
+          user_name: string | null
+        }
+        Insert: {
+          amount?: number | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          payment_method: string
+          receipt_url?: string | null
+          status?: string
+          transaction_id?: string | null
+          updated_at?: string
+          upi_id?: string | null
+          user_email?: string | null
+          user_id?: string | null
+          user_name?: string | null
+        }
+        Update: {
+          amount?: number | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          payment_method?: string
+          receipt_url?: string | null
+          status?: string
+          transaction_id?: string | null
+          updated_at?: string
+          upi_id?: string | null
+          user_email?: string | null
+          user_id?: string | null
+          user_name?: string | null
+        }
+        Relationships: []
+      }
       personality_insights: {
         Row: {
           conversation_id: string

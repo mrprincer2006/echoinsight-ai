@@ -19,6 +19,7 @@ import SecureVault from "./pages/SecureVault";
 import SemanticSearch from "./pages/SemanticSearch";
 import StudyTools from "./pages/StudyTools";
 import RealtimeInsights from "./pages/RealtimeInsights";
+import Payment from "./pages/Payment";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ const App = () => (
           <Route path="/semantic-search" element={<SemanticSearch />} />
           <Route path="/study-tools" element={<StudyTools />} />
           <Route path="/realtime-insights" element={<RealtimeInsights />} />
+          <Route path="/payment" element={<Payment />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
