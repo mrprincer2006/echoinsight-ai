@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -14,14 +14,27 @@ import { Check, Copy, Upload, Smartphone, Building2, QrCode, Loader2, Sparkles }
 
 const Payment = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState("upi");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [copiedField, setCopiedField] = useState<string | null>(null);
+  
+  // Get plan details from URL params
+  const planName = searchParams.get("plan") || "Premium Vault";
+  const planPrice = parseFloat(searchParams.get("price") || "19");
+  const currency = searchParams.get("currency") || "USD";
+  
+  // Convert USD to INR (approximate rate: 1 USD = 83 INR)
+  const [amountInr, setAmountInr] = useState(planPrice * 83);
+  
+  useEffect(() => {
+    setAmountInr(planPrice * 83);
+  }, [planPrice]);
 
   // UPI Details
   const upiId = "srsvault@upi";
-  const upiQrCode = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=upi://pay?pa=${upiId}&pn=SRS%20Vault%20AI&cu=INR`;
+  const upiQrCode = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=upi://pay?pa=${upiId}&pn=SRS%20Vault%20AI&am=${amountInr.toFixed(2)}&cu=INR`;
 
   // Bank Details
   const bankDetails = {
@@ -162,6 +175,34 @@ Branch: ${bankDetails.branch}`;
             </p>
           </div>
 
+          {/* Plan Details Card */}
+          <Card className="glass-morphism border-primary/20 mb-8 animate-fade-in">
+            <CardContent className="p-6">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                  <h2 className="text-2xl font-bold text-gradient mb-2">{planName}</h2>
+                  <p className="text-muted-foreground">Monthly recurring subscription</p>
+                </div>
+                <div className="text-right">
+                  <div className="text-3xl font-bold text-gradient mb-1">
+                    ${planPrice} USD
+                  </div>
+                  <div className="text-lg text-accent">
+                    ≈ ₹{amountInr.toFixed(0)} INR
+                  </div>
+                </div>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => navigate("/services")}
+                className="mt-4"
+              >
+                ← Back to Plans
+              </Button>
+            </CardContent>
+          </Card>
+
           {/* Payment Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="animate-fade-in">
             <TabsList className="grid w-full grid-cols-2 mb-8 glass h-14">
@@ -255,9 +296,13 @@ Branch: ${bankDetails.branch}`;
                           name="amount" 
                           type="number" 
                           step="0.01"
-                          placeholder="999.00" 
-                          required 
+                          value={amountInr.toFixed(2)}
+                          readOnly
+                          className="bg-muted/50"
                         />
+                        <p className="text-xs text-muted-foreground">
+                          ${planPrice} USD ≈ ₹{amountInr.toFixed(0)} INR
+                        </p>
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="upi-transaction">Transaction ID *</Label>
@@ -425,9 +470,13 @@ Branch: ${bankDetails.branch}`;
                           name="amount" 
                           type="number" 
                           step="0.01"
-                          placeholder="999.00" 
-                          required 
+                          value={amountInr.toFixed(2)}
+                          readOnly
+                          className="bg-muted/50"
                         />
+                        <p className="text-xs text-muted-foreground">
+                          ${planPrice} USD ≈ ₹{amountInr.toFixed(0)} INR
+                        </p>
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="bank-reference">Reference/UTR Number *</Label>
