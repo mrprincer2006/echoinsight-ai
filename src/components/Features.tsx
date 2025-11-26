@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Mic, Brain, Lock, Search, FileText, Zap, Users, Globe, BarChart3, Tag, Share2, Bell } from "lucide-react";
+import ScrollReveal from "@/components/ScrollReveal";
 
 const Features = () => {
   const navigate = useNavigate();
@@ -94,23 +95,24 @@ const Features = () => {
     <section className="py-16 sm:py-24 lg:py-32 relative">
       <div className="container mx-auto px-4 lg:px-8">
         {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16 animate-fade-in">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading mb-4 sm:mb-6">
-            Powerful <span className="text-gradient">Features</span>
-          </h2>
-          <p className="text-base sm:text-lg lg:text-xl text-foreground/70">
-            Everything you need to transform conversations into actionable intelligence
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading mb-4 sm:mb-6">
+              Powerful <span className="text-gradient">Features</span>
+            </h2>
+            <p className="text-base sm:text-lg lg:text-xl text-foreground/70">
+              Everything you need to transform conversations into actionable intelligence
+            </p>
+          </div>
+        </ScrollReveal>
 
         {/* Features Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto">
           {features.map((feature, index) => (
-            <div
-              key={index}
+            <ScrollReveal key={index} delay={index * 0.1} threshold={0.2}>
+              <div
               onClick={() => navigate(feature.path)}
-              className="glass-morphism rounded-3xl p-6 sm:p-8 hover-lift cursor-pointer group animate-fade-in-up relative overflow-hidden"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className="glass-morphism rounded-3xl p-6 sm:p-8 hover-lift cursor-pointer group relative overflow-hidden"
             >
               {/* Hover gradient effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -137,6 +139,7 @@ const Features = () => {
                 <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
               </div>
             </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Mail, MessageSquare } from "lucide-react";
+import ScrollReveal from "./ScrollReveal";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -13,9 +14,10 @@ const Footer = () => {
       </div>
       
       <div className="container mx-auto px-4 lg:px-8 py-12 lg:py-16 relative z-10">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-          {/* Brand */}
-          <div className="space-y-4 group">
+        <ScrollReveal threshold={0.1}>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+            {/* Brand */}
+            <div className="space-y-4 group">
             <h3 className="text-2xl font-bold font-heading text-gradient hover:scale-105 transition-transform duration-300 inline-block">
               SRS Vault AI
             </h3>
@@ -90,13 +92,16 @@ const Footer = () => {
             </ul>
           </div>
         </div>
+        </ScrollReveal>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/10 mt-12 pt-8 text-center">
+        <ScrollReveal threshold={0.1} delay={0.2}>
+          <div className="border-t border-white/10 mt-12 pt-8 text-center">
           <p className="text-sm text-foreground/60">
             © {currentYear} SRS Vault AI. All rights reserved.
           </p>
         </div>
+        </ScrollReveal>
       </div>
     </footer>
   );
