@@ -63,7 +63,7 @@ const Hero = () => {
             <Button
               size="lg"
               onClick={() => navigate("/auth")}
-              className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-all duration-300 glow group text-base sm:text-lg px-6 sm:px-8 h-12 sm:h-14"
+              className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-all duration-300 group text-base sm:text-lg px-6 sm:px-8 h-12 sm:h-14"
             >
               Start Recording Free
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
