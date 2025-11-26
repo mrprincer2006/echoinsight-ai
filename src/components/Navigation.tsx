@@ -29,7 +29,7 @@ const Navigation = () => {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled ? "glass-morphism shadow-2xl py-2" : "bg-transparent py-4"
+        isScrolled ? "bg-black/95 backdrop-blur-xl shadow-2xl py-2 border-b border-white/5" : "bg-black/80 backdrop-blur-sm py-4"
       }`}
     >
       <div className="container mx-auto px-4 lg:px-8">
@@ -37,7 +37,6 @@ const Navigation = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-accent rounded-lg blur-lg opacity-50 group-hover:opacity-100 transition-all duration-500 animate-gradient-shift bg-[length:200%_200%]" />
               <h1 className="relative text-2xl lg:text-3xl font-bold font-heading text-gradient px-4 py-2 hover:scale-105 transition-transform duration-300">
                 SRS Vault AI
               </h1>
@@ -57,7 +56,7 @@ const Navigation = () => {
                 }`}
               >
                 {location.pathname === link.path && (
-                  <span className="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-20 rounded-xl animate-pulse-glow" />
+                  <span className="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-20 rounded-xl" />
                 )}
                 <span className="relative">{link.name}</span>
                 <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all duration-300 ${
@@ -67,7 +66,7 @@ const Navigation = () => {
             ))}
             <Button 
               onClick={() => navigate("/auth")}
-              className="ml-4 bg-gradient-to-r from-primary via-secondary to-accent bg-[length:200%_200%] animate-gradient-shift hover:scale-105 transition-all duration-300 glow shadow-lg"
+              className="ml-4 bg-gradient-to-r from-primary via-secondary to-accent bg-[length:200%_200%] animate-gradient-shift hover:scale-105 transition-all duration-300 shadow-lg"
             >
               Get Started
             </Button>
