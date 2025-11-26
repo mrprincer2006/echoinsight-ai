@@ -2,6 +2,7 @@ import { Button } from "./ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import GradientBlinds from "./GradientBlinds";
+import ScrollReveal from "./ScrollReveal";
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -79,21 +80,23 @@ const Hero = () => {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 pt-12 sm:pt-16 max-w-4xl mx-auto animate-fade-in" style={{ animationDelay: "0.6s" }}>
-            {[
-              { value: "10K+", label: "Active Users" },
-              { value: "500K+", label: "Conversations" },
-              { value: "98%", label: "Accuracy" },
-              { value: "30s", label: "Avg Summary Time" },
-            ].map((stat, index) => (
-              <div key={index} className="glass rounded-xl p-4 sm:p-6 hover:scale-105 transition-transform">
-                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gradient-accent">
-                  {stat.value}
+          <ScrollReveal delay={0.6}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 pt-12 sm:pt-16 max-w-4xl mx-auto">
+              {[
+                { value: "10K+", label: "Active Users" },
+                { value: "500K+", label: "Conversations" },
+                { value: "98%", label: "Accuracy" },
+                { value: "30s", label: "Avg Summary Time" },
+              ].map((stat, index) => (
+                <div key={index} className="glass rounded-xl p-4 sm:p-6 hover:scale-105 transition-transform">
+                  <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gradient-accent">
+                    {stat.value}
+                  </div>
+                  <div className="text-xs sm:text-sm text-foreground/60 mt-1 sm:mt-2">{stat.label}</div>
                 </div>
-                <div className="text-xs sm:text-sm text-foreground/60 mt-1 sm:mt-2">{stat.label}</div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

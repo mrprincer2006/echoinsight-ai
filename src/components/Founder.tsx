@@ -1,4 +1,5 @@
 import founderImage from "@/assets/founder.jpg";
+import ScrollReveal from "@/components/ScrollReveal";
 
 const Founder = () => {
   return (
@@ -12,17 +13,20 @@ const Founder = () => {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="max-w-6xl mx-auto">
           {/* Section Title */}
-          <div className="text-center mb-12 sm:mb-16 animate-fade-in">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading mb-4">
-              Meet the <span className="text-gradient">Founder</span>
-            </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full" />
-          </div>
+          <ScrollReveal>
+            <div className="text-center mb-12 sm:mb-16">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading mb-4">
+                Meet the <span className="text-gradient">Founder</span>
+              </h2>
+              <div className="w-20 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full" />
+            </div>
+          </ScrollReveal>
 
           {/* Founder Content */}
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Image */}
-            <div className="order-1 md:order-1 animate-fade-in-up">
+            <ScrollReveal direction="left" delay={0.2}>
+              <div className="order-1 md:order-1">
               <div className="relative group max-w-md mx-auto md:max-w-none">
                 <div className="absolute -inset-4 bg-gradient-to-r from-primary to-secondary rounded-2xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity" />
                 <div className="relative glass rounded-2xl p-2 overflow-hidden">
@@ -34,9 +38,11 @@ const Founder = () => {
                 </div>
               </div>
             </div>
+            </ScrollReveal>
 
             {/* Bio */}
-            <div className="order-2 md:order-2 space-y-6 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+            <ScrollReveal direction="right" delay={0.4}>
+              <div className="order-2 md:order-2 space-y-6">
               <div>
                 <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-heading mb-2">
                   Prince Raj
@@ -75,6 +81,7 @@ const Founder = () => {
                 </div>
               </div>
             </div>
+            </ScrollReveal>
           </div>
         </div>
       </div>
